@@ -1,6 +1,6 @@
 # Formations
 Formations for AI in games
-# Description of the topic
+# Description
 # Implementation
 # Result
 # Conclusion/Future work
