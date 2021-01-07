@@ -1,2 +1,6 @@
-# AI-Research-Formations
-Different types of formations agents can perform in a 2d environment
+# Formations
+Formations for AI in games
+# Description of the topic
+# Implementation
+# Result
+# Conclusion/Future work
