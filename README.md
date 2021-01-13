@@ -36,7 +36,9 @@ While informing myself on this topic i also noticed the topic of pathfinding wit
 While in combat in a real game ,agents often die and have to be replaced. This is my first priority in the future implementation . 
 #### Links
 https://www.gamasutra.com/view/feature/3314/coordinated_unit_movement.php?print=1
+
 http://www.spronck.net/pubs/Heijden-CIG2008.pdf
+
 #### Insipration
 
 Total War
