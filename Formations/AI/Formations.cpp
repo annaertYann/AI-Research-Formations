@@ -29,10 +29,10 @@ void Formation::Draw()const
 	utils::FillEllipse(m_Position, 10, 10);
 	for (auto& row : m_Place)
 	{
-		/*utils::SetColor(Color4f{ 1,0,0,1 });
+		utils::SetColor(Color4f{ 1,0,0,1 });
 		utils::FillEllipse(row.first.rotatedPostion, 5, 5);
 		utils::SetColor(Color4f{ 0,1,0,1 });
-		utils::FillEllipse(row.first.translatedPostion, 5, 5);*/
+		utils::FillEllipse(row.first.translatedPostion, 5, 5);
 	}
 
 }
@@ -57,9 +57,6 @@ void Formation::Seek(Point2f target,float deltaTime)
 
 		}	
 	}
-	
-	
-
 }
 Point2f Formation::CalculateAveragePos()
 {
@@ -80,10 +77,7 @@ Point2f Formation::CalculateAveragePos()
 void Square::ConstructFormation()
 {
 	m_Place.clear();
-	Point2f pos{};
-	pos = CalculateAveragePos();
-	m_Position = pos;
-
+	m_Position = CalculateAveragePos();
 	int counter{};
 	for (int j{}; j < m_RowSize; j++)
 	{
@@ -105,10 +99,7 @@ void Square::ConstructFormation()
 void Triangle::ConstructFormation()
 {
 	m_Place.clear();
-	Point2f pos{};
-	pos = CalculateAveragePos();
-	m_Position = pos;
-
+	m_Position = CalculateAveragePos();
 	int rowSize{};
 	int currentY{};
 	int counter{};
@@ -134,10 +125,7 @@ void Triangle::ConstructFormation()
 void Rect::ConstructFormation()
 {
 	m_Place.clear();
-	Point2f pos{};
-	pos = CalculateAveragePos();
-	m_Position = pos;
-
+	m_Position = CalculateAveragePos();
 	int counter{};
 	for (int j{}; j < m_collomSize; j++)
 	{
@@ -160,10 +148,7 @@ void Rect::ConstructFormation()
 void Turtle::ConstructFormation()
 {
 	m_Place.clear();
-	Point2f pos{};
-	pos = CalculateAveragePos();
-	m_Position = pos;
-
+	m_Position = CalculateAveragePos();
 	int counter{};
 	for (int j{}; j < m_RowSize; j++)
 	{

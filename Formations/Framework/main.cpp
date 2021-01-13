@@ -11,7 +11,7 @@ int main( int argc, char *argv[] )
 	{
 		StartHeapControl();
 
-		Core core{ Window{ "RPG", 1020.0f, 800.0f } };
+		Core core{ Window{ "Formations", 1020.0f, 800.0f } };
 		core.Run();
 	}
 	DumpMemoryLeaks();

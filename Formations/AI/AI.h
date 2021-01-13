@@ -20,7 +20,6 @@ public:
 	Point2f GetPosition() { return  Point2f{ m_Shape.left + m_Shape.width / 2,m_Shape.bottom + m_Shape.height / 2 }; }
 	Rectf GetShape() { return m_Shape; }
 
-
 private:
 	//Wandering
 	Delay m_WanderDelay = Delay{ float((rand() % 5 ) + 5)};

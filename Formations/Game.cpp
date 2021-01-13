@@ -18,11 +18,11 @@ Game::~Game( )
 
 void Game::Initialize( )
 {
+	m_pFormation = new FormationController{m_pCamera};
 	for (int i{}; i < 78; i++)
 	{
 		m_AI.push_back(new AI{ Rectf{float(rand() % int(m_Window.width)),float(rand() % int(m_Window.height)),m_Window.width / 20,m_Window.height / 20} });
 	}
-	m_pFormation = new Triangle{m_AI};
 }
 
 void Game::Cleanup( )
@@ -34,7 +34,10 @@ void Game::Cleanup( )
 		SAFE_DELETE(pAI);
 	}
 }
+void Game::SelectAgents()
+{
 
+}
 void Game::Update( float elapsedSec )
 {
 	m_FPS.update(elapsedSec);
@@ -44,7 +47,6 @@ void Game::Update( float elapsedSec )
 	{
 		pAI->Update(elapsedSec);
 	}
-	m_pFormation->Seek(m_Target,elapsedSec);
 	m_pFormation->Update(elapsedSec);
 	
 }
@@ -57,6 +59,8 @@ void Game::Draw( ) const
 		pAI->Draw();
 	}
 	m_pFormation->Draw();
+	utils::SetColor(Color4f{1,1,1,1});
+	utils::DrawRect(m_SelectSquare);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -67,24 +71,30 @@ void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 }
 void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 {
-	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
-	//switch ( e.keysym.sym )
-	//{
-	//case SDLK_LEFT:
-	//	//std::cout << "Left arrow key released\n";
-	//	break;
-	//case SDLK_RIGHT:
-	//	//std::cout << "`Right arrow key released\n";
-	//	break;
-	//case SDLK_1:
-	//case SDLK_KP_1:
-	//	//std::cout << "Key 1 released\n";
-	//	break;
-	//}
+	switch ( e.keysym.sym )
+	{
+	case SDLK_LEFT:
+		//std::cout << "Left arrow key released\n";
+		m_pFormation->ChangeFormationType(true);
+		break;
+	case SDLK_RIGHT:
+		m_pFormation->ChangeFormationType(false);
+		//std::cout << "`Right arrow key released\n";
+		break;
+	case SDLK_1:
+	case SDLK_KP_1:
+		//std::cout << "Key 1 released\n";
+		break;
+	}
 }
 void Game::ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e )
 {
 	//std::cout << "MOUSEMOTION event: " << e.x << ", " << e.y << std::endl;
+	if (m_IsSelecting)
+	{
+		m_SelectSquare.width = m_pCamera->GetMousePos().x-m_SelectSquare.left ;
+		m_SelectSquare.height = m_pCamera->GetMousePos().y - m_SelectSquare.bottom;
+	}
 }
 void Game::ProcessMouseDownEvent( const SDL_MouseButtonEvent& e )
 {
@@ -92,10 +102,16 @@ void Game::ProcessMouseDownEvent( const SDL_MouseButtonEvent& e )
 	switch ( e.button )
 	{
 	case SDL_BUTTON_LEFT:
-		m_Target = m_pCamera->GetMousePos();
-		
+		if (!m_IsSelecting)
+		{
+			m_SelectSquare.left = m_pCamera->GetMousePos().x;
+			m_SelectSquare.bottom = m_pCamera->GetMousePos().y;
+			m_IsSelecting = true;
+		}
+		m_pFormation->SelectFormation();
 		break;
 	case SDL_BUTTON_RIGHT:
+		m_pFormation->SetTarget(m_pCamera->GetMousePos());
 		break;
 	case SDL_BUTTON_MIDDLE:
 		break;
@@ -103,19 +119,48 @@ void Game::ProcessMouseDownEvent( const SDL_MouseButtonEvent& e )
 }
 void Game::ProcessMouseUpEvent( const SDL_MouseButtonEvent& e )
 {
-	//std::cout << "MOUSEBUTTONUP event: ";
-	//switch ( e.button )
-	//{
-	//case SDL_BUTTON_LEFT:
-	//	std::cout << " left button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_RIGHT:
-	//	std::cout << " right button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_MIDDLE:
-	//	std::cout << " middle button " << std::endl;
-	//	break;
-	//}
+	Square* f{};
+	switch ( e.button )
+	{
+	case SDL_BUTTON_LEFT:
+		m_IsSelecting= false;
+		m_SelectedAI.clear();
+		//ADJUST SELECT SQUARE IF NEEDED
+		if (m_SelectSquare.width < 0)
+		{
+			m_SelectSquare.width *= -1;
+			m_SelectSquare.left = m_SelectSquare.left - m_SelectSquare.width;
+		}
+		if (m_SelectSquare.height < 0)
+		{
+			m_SelectSquare.height *= -1;
+			m_SelectSquare.bottom = m_SelectSquare.bottom - m_SelectSquare.height;
+		}
+		//ADD SELECTED AI
+		for (auto& pAI : m_AI)
+		{
+			if (pAI != nullptr)
+			{
+				if (utils::IsOverlapping(m_SelectSquare, pAI->GetShape()))
+				{
+					m_SelectedAI.push_back(pAI);
+				}
+			}
+		}
+		m_SelectSquare = Rectf{};
+		//MAKE FORMATION
+		if (m_SelectedAI.size() > 0)
+		{
+			f = new Square{ m_SelectedAI };
+			m_pFormation->AddFormation(f);
+		}
+		break;
+	case SDL_BUTTON_RIGHT:
+		
+		break;
+	case SDL_BUTTON_MIDDLE:
+		break;
+	}
 }
 void Game::ProcessMouseWheel(const SDL_Event& e)
 {
@@ -123,6 +168,6 @@ void Game::ProcessMouseWheel(const SDL_Event& e)
 }
 void Game::ClearBackground( ) const
 {
-	glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
+	glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT );
 }

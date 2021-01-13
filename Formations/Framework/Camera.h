@@ -8,7 +8,8 @@ public:
 	void Update(float delataTime);
 	void UpdateScale(SDL_Event event);
 	Point2f GetMousePos();
-
+	Point2f GetPosition();
+	Window GetWindow();
 private:
 	Point2f m_Position = {};
 	float m_Speed = 400;

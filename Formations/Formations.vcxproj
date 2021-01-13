@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AI\AI.cpp" />
+    <ClCompile Include="AI\FormationController.cpp" />
     <ClCompile Include="AI\Formations.cpp" />
     <ClCompile Include="Framework\Camera.cpp" />
     <ClCompile Include="Framework\Core.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI\AI.h" />
+    <ClInclude Include="AI\FormationController.h" />
     <ClInclude Include="AI\Formations.h" />
     <ClInclude Include="Framework\Camera.h" />
     <ClInclude Include="Framework\Core.h" />

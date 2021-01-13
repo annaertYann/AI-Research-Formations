@@ -94,3 +94,14 @@ Point2f Camera::GetMousePos()
 	mousePos = Point2f{float(x) +m_Position.x , (height-float(y) )+m_Position.y};
 	return mousePos;
 }
+Point2f Camera::GetPosition()
+{
+	return m_Position;
+}
+Window Camera::GetWindow()
+{
+	Window window = m_Window;
+	window.width /= m_Scale;
+	window.height /= m_Scale;
+	return window;
+}

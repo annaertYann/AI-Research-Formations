@@ -1,7 +1,7 @@
 #pragma once
 #include "Framework/FpsCheck.h"
 #include "Framework/Camera.h"
-#include "AI/Formations.h"
+#include "AI/FormationController.h"
 class Game
 {
 public:
@@ -25,15 +25,22 @@ public:
 
 private:
 	// DATA MEMBERS
+	
 	const Window m_Window;
 	FPSChecker m_FPS;
+	Camera* m_pCamera = nullptr;
+	std::vector<AI*> m_AI;
+	Point2f m_Target = Point2f{ 500,500 };
+	FormationController* m_pFormation{};
+	//SELECTION
+	std::vector<AI*>m_SelectedAI;
+	Rectf m_SelectSquare{};
+	bool m_IsSelecting = false;
 	// FUNCTIONS
 	void Initialize( );
+	void SelectAgents();
 	void Cleanup( );
 	void ClearBackground( ) const;
-	Camera* m_pCamera=nullptr;
-	std::vector<AI*> m_AI;
-	Point2f m_Target = Point2f{500,500};
-	Formation* m_pFormation{};
+	
 
 };

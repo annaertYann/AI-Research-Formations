@@ -24,14 +24,20 @@ public:
 		}
 	};
 	~Formation()=default;
-
+	Point2f CalculateAveragePos();
 	virtual void ConstructFormation() {};
+	Point2f GetPosition() { return m_Position; }
 	void Update(float deltaTime);
 	void Draw()const;
 	void Seek(Point2f target,float deltaTime);
 
+	void SetIsSelected(bool x) { m_IsSelected = x; }
+	bool GetIsSelected() { return m_IsSelected; }
+
+	std::vector<AI*> GetAI() { return m_AI; }
+
 protected:
-	Point2f CalculateAveragePos();
+	
 	std::vector < std::pair< PlaceHolder, AI*> > m_Place;
 	std::vector<AI*> m_AI;
 	Point2f m_Position = Point2f{500,500};
@@ -39,6 +45,7 @@ protected:
 	float m_MovementSpeed=400;
 	float m_MaxMovementSpeed = 400;
 	Vector2f m_SpaceBetweenUnits;
+	bool m_IsSelected = false;
 };
 
 
@@ -95,7 +102,6 @@ public:
 	Turtle(std::vector<AI*> ai)
 		:Formation(ai)
 	{
-		ConstructFormation();
 	}
 
 	~Turtle() = default;
