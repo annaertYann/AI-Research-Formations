@@ -26,6 +26,7 @@ void FormationController::Draw()const
 	Rectf formationCloseButton{ (formationUIShape.left + formationUIShape.width) - (formationUIShape.width / 4) , formationUIShape.bottom ,(formationUIShape.width / 4),formationUIShape.height };
 	Rectf formationName{formationCloseButton};
 	Rectf formationInfo{ pos.x,pos.y,shapeUI.width,shapeUI.height / 20 };
+	Rectf debugButton {(shapeUI.left+shapeUI.width)-shapeUI.width/10,(shapeUI.bottom+shapeUI.height)-shapeUI.height/20,shapeUI.width/10,shapeUI.height/20};
 	formationName.left -= formationCloseButton.width * 3;
 	formationName.width *= 2;
 	utils::SetColor(Color4f{ 0.1f,0.1f,0.1f,1 });
@@ -41,7 +42,18 @@ void FormationController::Draw()const
 			utils::SetColor(Color4f{ 0.0f,1.0f,0.0f,1 });
 			utils::DrawRect(formationUIShape);
 		}
-
+		if (m_DebugMode)
+		{
+			utils::SetColor(Color4f{ 0.3f,0.9f,0.3f,1 });
+		}
+		else
+		{
+			utils::SetColor(Color4f{ 0.3f,0.3f,0.9f,1 });
+		}
+		
+		utils::FillRect(debugButton);
+		utils::SetColor(Color4f{ 0.0f,0.0f,0.0f,1 });
+		utils::DrawRect(debugButton);
 		m_Texture.Draw(formationName);
 		m_TextureInfo.Draw(formationInfo);
 		formationUIShape.bottom -= shapeUI.height / 10;
@@ -69,8 +81,20 @@ void FormationController::SelectFormation()
 	Rectf formationName{ formationCloseButton };
 	formationName.left -= formationCloseButton.width * 3;
 	formationName.width *= 2;
+	Rectf debugButton{ (shapeUI.left + shapeUI.width) - shapeUI.width / 10,(shapeUI.bottom + shapeUI.height) - shapeUI.height / 20,shapeUI.width / 10,shapeUI.height / 20 };
 	utils::SetColor(Color4f{ 0.1f,0.1f,0.1f,1 });
 	utils::FillRect(shapeUI);
+	if (utils::IsPointInRect(m_pCamera->GetMousePos(), debugButton))
+	{
+		if (m_DebugMode)
+		{
+			m_DebugMode = false;
+		}
+		else
+		{
+			m_DebugMode = true;
+		}
+	}
 	m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
 	{
 		if (utils::IsPointInRect(m_pCamera->GetMousePos(), formationCloseButton))
@@ -130,6 +154,7 @@ void FormationController::ChangeFormationType(bool left)
 			m_CurrentFormation = new Square{ ai };
 			m_Formations.push_back(m_CurrentFormation);
 			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Phalanx" << std::endl;
 			break;
 		case FormationType::FlyingWedge:
 			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
@@ -140,6 +165,18 @@ void FormationController::ChangeFormationType(bool left)
 			m_CurrentFormation = new Triangle{ ai };
 			m_Formations.push_back(m_CurrentFormation);
 			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Flying Wedge" << std::endl;
+			break;
+		case FormationType::HalfTurtle:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new HalfTurtle{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "HalfTurtle" << std::endl;
 			break;
 		case FormationType::Turtle:
 			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
@@ -150,6 +187,62 @@ void FormationController::ChangeFormationType(bool left)
 			m_CurrentFormation = new Turtle{ ai };
 			m_Formations.push_back(m_CurrentFormation);
 			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Turtle" << std::endl;
+			break;
+		case FormationType::Line:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new Line{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Line" << std::endl;
+			break;
+		case FormationType::Column:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new Column{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Column" << std::endl;
+			break;
+		case FormationType::Loose:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new Loose{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Loose" << std::endl;
+			break;
+		case FormationType::Circle:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new Circle{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "Circle" << std::endl;
+			break;
+		case FormationType::HalfCircle:
+			m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
+			{
+				return element->GetIsSelected();
+			}), m_Formations.end());
+			SAFE_DELETE(m_CurrentFormation);
+			m_CurrentFormation = new HalfCircle{ ai };
+			m_Formations.push_back(m_CurrentFormation);
+			m_CurrentFormation->SetIsSelected(true);
+			std::cout << "HalfCircle" << std::endl;
 			break;
 		case FormationType::END:
 			break;

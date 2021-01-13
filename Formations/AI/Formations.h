@@ -19,7 +19,8 @@ public:
 			{
 				m_SpaceBetweenUnits.x = pElement->GetShape().width*2;
 				m_SpaceBetweenUnits.y = pElement->GetShape().height*2;
-				break;
+				pElement->SetExtraRotation(0);
+				pElement->SetColor(Color4f{1,1,1,1});
 			}
 		}
 	};
@@ -46,6 +47,7 @@ protected:
 	float m_MaxMovementSpeed = 400;
 	Vector2f m_SpaceBetweenUnits;
 	bool m_IsSelected = false;
+	bool m_buildOnce = false;
 };
 
 
@@ -56,6 +58,7 @@ public:
 	Square(std::vector<AI*> ai)
 		:Formation(ai)
 	{
+		m_RowSize = int(sqrt( m_AI.size() ) ) ;
 		ConstructFormation();
 	}
 
@@ -96,12 +99,30 @@ private:
 };
 
 
+class HalfTurtle :public Formation
+{
+public:
+	HalfTurtle(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		m_RowSize = int(sqrt(m_AI.size()));
+		ConstructFormation();
+	}
+
+	~HalfTurtle() = default;
+
+	void ConstructFormation();
+private:
+	float m_RowSize = 9;
+};
 class Turtle :public Formation
 {
 public:
 	Turtle(std::vector<AI*> ai)
 		:Formation(ai)
 	{
+		m_RowSize = int(sqrt(m_AI.size())) ;
+		ConstructFormation();
 	}
 
 	~Turtle() = default;
@@ -109,4 +130,84 @@ public:
 	void ConstructFormation();
 private:
 	float m_RowSize = 9;
+};
+class Line :public Formation
+{
+public:
+	Line(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		ConstructFormation();
+		
+	}
+
+	~Line() = default;
+
+	void ConstructFormation();
+private:
+};
+class Column :public Formation
+{
+public:
+	Column(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		ConstructFormation();
+
+	}
+
+	~Column() = default;
+
+	void ConstructFormation();
+private:
+};
+
+class Loose :public Formation
+{
+public:
+	Loose(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		ConstructFormation();
+
+	}
+
+	~Loose() = default;
+
+	void ConstructFormation();
+private:
+};
+class Circle :public Formation
+{
+public:
+	Circle(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		m_Degree = 360 / float(m_AI.size());
+		ConstructFormation();
+		
+	}
+
+	~Circle() = default;
+
+	void ConstructFormation();
+private:
+	float m_Degree = 0;
+};
+class HalfCircle :public Formation
+{
+public:
+	HalfCircle(std::vector<AI*> ai)
+		:Formation(ai)
+	{
+		m_Degree = 360 / float(m_AI.size() + 1);
+		ConstructFormation();
+
+	}
+
+	~HalfCircle() = default;
+
+	void ConstructFormation();
+private:
+	float m_Degree = 0;
 };

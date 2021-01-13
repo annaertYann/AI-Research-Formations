@@ -19,7 +19,7 @@ Game::~Game( )
 void Game::Initialize( )
 {
 	m_pFormation = new FormationController{m_pCamera};
-	for (int i{}; i < 78; i++)
+	for (int i{}; i < 25; i++)
 	{
 		m_AI.push_back(new AI{ Rectf{float(rand() % int(m_Window.width)),float(rand() % int(m_Window.height)),m_Window.width / 20,m_Window.height / 20} });
 	}
@@ -119,7 +119,7 @@ void Game::ProcessMouseDownEvent( const SDL_MouseButtonEvent& e )
 }
 void Game::ProcessMouseUpEvent( const SDL_MouseButtonEvent& e )
 {
-	Square* f{};
+	Formation* f{};
 	switch ( e.button )
 	{
 	case SDL_BUTTON_LEFT:
@@ -151,7 +151,7 @@ void Game::ProcessMouseUpEvent( const SDL_MouseButtonEvent& e )
 		//MAKE FORMATION
 		if (m_SelectedAI.size() > 0)
 		{
-			f = new Square{ m_SelectedAI };
+			f = new Loose{ m_SelectedAI };
 			m_pFormation->AddFormation(f);
 		}
 		break;

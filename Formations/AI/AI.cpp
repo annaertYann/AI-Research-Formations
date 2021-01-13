@@ -20,17 +20,14 @@ void AI::Draw()const
 {
 	glPushMatrix();
 	glTranslatef(m_Shape.left+m_Shape.width/2, m_Shape.bottom+m_Shape.height/2, 0);
-	glRotatef(m_Rotation,0,0,1);
+	glRotatef(m_Rotation+180,0,0,1);
 	glTranslatef(-m_Shape.left-m_Shape.width/2, -m_Shape.bottom-m_Shape.height/2, 0);
-
 
 	utils::SetColor(m_Color);
 	utils::FillRect(m_Shape);
 
-	utils::SetColor(Color4f{ 0,0,0,1 });
-	utils::FillRect(Rectf{m_Shape.left+m_Shape.width/4 , m_Shape.bottom + m_Shape.height - m_Shape.height,m_Shape.width/4,m_Shape.height/4});
-	
-
+	m_Texture.Draw(m_Shape);
+	utils::SetColor(Color4f{ 0, 0, 0, 1 });
 	utils::DrawRect(m_Shape);
 
 	
@@ -51,7 +48,7 @@ void AI::Seek(float deltaTime, Point2f target)
 
 	if (movement.Length() != 0)
 	{
-		m_Rotation = atan2f(movement.x, -movement.y)*180/M_PI;
+		m_Rotation = (atan2f(movement.x, -movement.y)*180/M_PI) + m_ExtraRotation ;
 	}
 
 	

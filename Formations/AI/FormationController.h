@@ -4,9 +4,15 @@
 #include "../Framework/Texture.h"
 enum class FormationType
 {
+Loose,
+ Line
+, Column,
 Phalanx,
 FlyingWedge
+,HalfTurtle
 ,Turtle
+,Circle
+, HalfCircle
 ,END
 };
 
@@ -31,5 +37,5 @@ private:
 	Formation* m_CurrentFormation = nullptr;
 	Point2f m_Target = Point2f{};
 	std::vector<Formation*>m_Formations;
-	FormationType m_FormationType = FormationType::Phalanx;
+	FormationType m_FormationType = FormationType::Loose;
 };
