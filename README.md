@@ -22,4 +22,5 @@ Base Formations have 1 default actions being seeking a target. The formation hav
 #### Orientation 
 Base agents will orient themself so they look at the target they are facing. This is also true for formations. The difference being that when rotating an agent means rotating its body. When rotating a formation, all the positions inside it have to be rotated around another point being the world position. A position can however tell the agent it controls to rotate itself .  
 # Result
+![](Formations.gif)
 # Conclusion/Future work
