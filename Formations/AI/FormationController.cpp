@@ -67,7 +67,12 @@ void FormationController::Update(float deltaTime)
 {
 	if (m_CurrentFormation != nullptr) 
 	{ 
-		m_CurrentFormation->Update(deltaTime);
+		if (!m_DebugMode)
+		{
+
+
+			m_CurrentFormation->Update(deltaTime);
+		}
 		m_CurrentFormation->Seek(m_Target,deltaTime); 
 	}
 
