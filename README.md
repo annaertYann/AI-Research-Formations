@@ -29,7 +29,7 @@ I made some different types of formations wich can all be cycled through. Differ
 ![](Debug.png)
 
 # Conclusion/Future work
-Making new formations can be done fairly as now it just a matter of creating the correct "Grid". Expanding the list is something i will definitely be doing in the future. 
+Making new formations can be done fairly qucikly as now it just a matter of creating the correct "Grid". Expanding the list is something i will definitely be doing in the future. 
 As for now it is also only possible to control a formation one at the time. In a real game this is obviously not fun so this is also a feature i would like to implement. 
 While informing myself on this topic i also noticed the topic of pathfinding with formations .I reckoned that this topic is something that has to be implement in the agent itself while my focus was more on the creation of formations. 
 While in combat in a real game ,agents often die and have to be replaced. This is my first priority in the future implementation . 
