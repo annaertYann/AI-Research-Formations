@@ -1,5 +1,9 @@
-#include "../../Framework/pch.h"
+#include "../../AI-Research-Formations/Formations/Framework/pch.h"
 #include "Game.h"
+
+
+#include "Framework/Defines.h"
+#include "Framework/structs.h"
 
 Game::Game( const Window& window ) 
 	:m_Window{ window }

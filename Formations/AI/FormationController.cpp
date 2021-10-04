@@ -100,11 +100,11 @@ void FormationController::SelectFormation()
 	}
 	m_Formations.erase(std::remove_if(m_Formations.begin(), m_Formations.end(), [&](Formation* element)
 	{
-		if (utils::IsPointInRect(m_pCamera->GetMousePos(), formationCloseButton))
+		/*if (utils::IsPointInRect(m_pCamera->GetMousePos(), formationCloseButton))
 		{
 			SAFE_DELETE(element);
 			return true;
-		}
+		}*/
 		if (utils::IsPointInRect(m_pCamera->GetMousePos(), formationUIShape))
 		{
 			for (auto f : m_Formations)
